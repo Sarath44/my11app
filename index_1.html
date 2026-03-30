@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>MY11CIRCLE – CHEGAYIMAR BATTLE</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #080d18;
+      --surf: #101826;
+      --surf2: #18263a;
+      --border: #1e3050;
+      --gold: #f5a623;
+      --gold2: #ffd700;
+      --silver: #b0bec5;
+      --bronze: #cd7f32;
+      --accent: #00d4ff;
+      --green: #00e676;
+      --red: #ff5252;
+      --txt: #dde4f0;
+      --txt2: #7a90aa;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+      background: var(--bg);
+      color: var(--txt);
+      font-family: 'Rajdhani', sans-serif;
+      overflow-x: hidden;
+      min-height: 100%;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background: radial-gradient(ellipse 100% 50% at 50% 0%, #0d2545 0%, transparent 65%),
+        radial-gradient(ellipse 60% 40% at 100% 100%, #0a1a30 0%, transparent 60%);
+    }
+
+    /* HEADER */
+    .app-header {
+      background: linear-gradient(135deg, #0b1625 0%, #080d18 60%, #0d2040 100%);
+      border-bottom: 2px solid var(--gold);
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      padding: 10px 14px;
+      box-shadow: 0 4px 24px rgba(245, 166, 35, .18);
+    }
+
+    .h-icon {
+      font-size: 1.7rem;
+      filter: drop-shadow(0 0 8px var(--gold));
+    }
+
+    .h-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.15rem;
+      letter-spacing: 2px;
+      color: var(--gold);
+      line-height: 1.1;
+    }
+
+    .h-sub {
+      font-size: 0.58rem;
+      color: var(--txt2);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .admin-pill {
+      background: linear-gradient(135deg, #1a0a00, #3d1f00);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    .btn-al {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--txt2);
+      padding: 6px 11px;
+      border-radius: 8px;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: .2s;
+      white-space: nowrap;
+    }
+
+    .btn-al:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .btn-lo {
+      background: transparent;
+      border: 1px solid var(--red);
+      color: var(--red);
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .btn-lo:hover {
+      background: var(--red);
+      color: #fff;
+    }
+
+    /* BOTTOM NAV */
+    .bnav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      background: #0b1625;
+      border-top: 1px solid var(--border);
+      display: flex;
+      padding-bottom: env(safe-area-inset-bottom, 4px);
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, .5);
+    }
+
+    .bn-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      padding: 7px 4px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--txt2);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: .2s;
+    }
+
+    .bn-btn i {
+      font-size: 1.3rem;
+    }
+
+    .bn-btn.active {
+      color: var(--gold);
+    }
+
+    .bn-btn.active i {
+      filter: drop-shadow(0 0 5px var(--gold));
+    }
+
+    /* MAIN */
+    .main {
+      position: relative;
+      z-index: 1;
+      padding: 14px 12px 86px;
+    }
+
+    /* SECTION TITLE */
+    .stitle {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 3px;
+      color: var(--gold);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .stitle::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+
+    /* STAT MINI CARDS */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .scard {
+      background: var(--surf);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 10px;
+      text-align: center;
+    }
+
+    .scard .big {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.7rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .scard .lbl {
+      font-size: 0.6rem;
+      color: var(--txt2);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* WINNER BANNER */
+    .wbanner {
+      background: linear-gradient(135deg, #1c0f00, #2e1900);
+      border: 2px solid var(--gold);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+      box-shadow: 0 0 32px rgba(245, 166, 35, .2);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .wtrophy {
+      font-size: 2.4rem;
+      animation: glow 2s infinite;
+    }
+
+    @keyframes glow {
+
+      0%,
+      100% {
+        filter: drop-shadow(0 0 8px var(--gold))
+      }
+
+      50% {
+        filter: drop-shadow(0 0 20px var(--gold2))
+      }
+    }
+
+    .wname {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.9rem;
+      color: var(--gold);
+      letter-spacing: 2px;
+      line-height: 1;
+    }
+
+    .wlbl {
+      font-size: 0.58rem;
+      color: var(--txt2);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .wstats {
+      font-size: 0.76rem;
+      color: var(--txt2);
+      margin-top: 4px;
+    }
+
+    .wstats span {
+      color: var(--gold2);
+      font-weight: 700;
+    }
+
+    /* LEADERBOARD */
+    .lb-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .lb-card {
+      background: var(--surf);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .lb-card.r1 {
+      border-color: var(--gold);
+      background: linear-gradient(135deg, #1c1000, var(--surf) 70%);
+    }
+
+    .lb-card.r2 {
+      border-color: var(--silver);
+      background: linear-gradient(135deg, #111517, var(--surf) 70%);
+    }
+
+    .lb-card.r3 {
+      border-color: var(--bronze);
+      background: linear-gradient(135deg, #1a0f00, var(--surf) 70%);
+    }
+
+    .lb-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+    }
+
+    .lb-card.r1::before {
+      background: var(--gold);
+    }
+
+    .lb-card.r2::before {
+      background: var(--silver);
+    }
+
+    .lb-card.r3::before {
+      background: var(--bronze);
+    }
+
+    .lb-rn {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.55rem;
+      width: 36px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .lb-rn.c1 {
+      color: var(--gold);
+    }
+
+    .lb-rn.c2 {
+      color: var(--silver);
+    }
+
+    .lb-rn.c3 {
+      color: var(--bronze);
+    }
+
+    .lb-rn.cn {
+      color: var(--txt2);
+      font-size: 1.1rem;
+    }
+
+    .lb-nw {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .lb-pn {
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: .5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .lb-pn.c1 {
+      color: var(--gold);
+    }
+
+    .lb-pn.c2 {
+      color: var(--silver);
+    }
+
+    .lb-pn.c3 {
+      color: var(--bronze);
+    }
+
+    .lb-bgs {
+      display: flex;
+      gap: 5px;
+      margin-top: 3px;
+      flex-wrap: wrap;
+    }
+
+    .lbg {
+      font-size: 0.62rem;
+      padding: 2px 7px;
+      border-radius: 20px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .lbg.w {
+      background: rgba(255, 215, 0, .12);
+      color: var(--gold2);
+    }
+
+    .lbg.s {
+      background: rgba(176, 190, 197, .1);
+      color: var(--silver);
+    }
+
+    .lbg.t {
+      background: rgba(205, 127, 50, .1);
+      color: var(--bronze);
+    }
+
+    .lb-pr {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .lb-pts {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    .lb-wr {
+      font-size: 0.62rem;
+      color: var(--accent);
+      font-family: 'Space Mono', monospace;
+    }
+
+    .lb-pl {
+      font-size: 0.52rem;
+      color: var(--txt2);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* FILTER PILLS */
+    .fpills {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      margin-bottom: 12px;
+      scrollbar-width: none;
+    }
+
+    .fpills::-webkit-scrollbar {
+      display: none;
+    }
+
+    .fpill {
+      flex-shrink: 0;
+      padding: 7px 16px;
+      border-radius: 20px;
+      font-size: 0.73rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--txt2);
+      transition: .2s;
+      white-space: nowrap;
+    }
+
+    .fpill.active {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+    }
+
+    /* FIXTURE CARDS */
+    .fcard {
+      background: var(--surf);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    .fcard.ftoday {
+      border-color: var(--accent);
+      box-shadow: 0 0 14px rgba(0, 212, 255, .1);
+    }
+
+    .fcard.fdone {
+      border-left: 3px solid var(--green);
+    }
+
+    .fcard.fediting {
+      border-color: var(--accent);
+      background: rgba(0, 212, 255, .03);
+    }
+
+    .ftop {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 7px;
+    }
+
+    .fnum {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.63rem;
+      color: var(--txt2);
+    }
+
+    .fteams {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 3px;
+    }
+
+    .fvenue {
+      font-size: 0.7rem;
+      color: var(--txt2);
+      margin-bottom: 5px;
+    }
+
+    .fdate {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--txt2);
+    }
+
+    .b-up {
+      background: var(--surf2);
+      color: var(--txt2);
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-size: 0.62rem;
+    }
+
+    .b-td {
+      background: rgba(255, 82, 82, .1);
+      color: var(--red);
+      border: 1px solid var(--red);
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-size: 0.62rem;
+      animation: blink 1.4s infinite;
+    }
+
+    .b-dn {
+      background: rgba(0, 230, 118, .1);
+      color: var(--green);
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-size: 0.62rem;
+    }
+
+    .b-ed {
+      background: rgba(0, 212, 255, .1);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-size: 0.62rem;
+      animation: blink 1.2s infinite;
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: .5
+      }
+    }
+
+    .fresult {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .fri {
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    /* ADMIN SELECTS */
+    .aselects {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .arow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .arow label {
+      font-size: 1rem;
+      flex-shrink: 0;
+      width: 28px;
+      text-align: center;
+    }
+
+    .arow select {
+      flex: 1;
+      background: var(--surf2);
+      color: var(--txt);
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      border-radius: 9px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .arow select.hv {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .arow select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .abnts {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .bsave {
+      flex: 1;
+      background: linear-gradient(135deg, var(--gold), #c98000);
+      color: #000;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 9px;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 0.92rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: .15s;
+    }
+
+    .bsave:active {
+      transform: scale(.97);
+    }
+
+    .bedit {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 10px 14px;
+      border-radius: 9px;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: .15s;
+      white-space: nowrap;
+      width: 100%;
+    }
+
+    .bedit:active {
+      background: var(--accent);
+      color: #000;
+    }
+
+    .bcancel {
+      background: transparent;
+      color: var(--red);
+      border: 1px solid var(--red);
+      padding: 10px 14px;
+      border-radius: 9px;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: .15s;
+      white-space: nowrap;
+    }
+
+    .bcancel:active {
+      background: var(--red);
+      color: #fff;
+    }
+
+    /* MY STATS */
+    .procard {
+      background: linear-gradient(135deg, var(--surf2), var(--surf));
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+
+    .av {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--gold), #a06a00);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      color: #000;
+    }
+
+    .pname {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.75rem;
+      color: var(--gold);
+      letter-spacing: 2px;
+      line-height: 1;
+    }
+
+    .rk-badge {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .rk-badge .rn {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      line-height: 1;
+    }
+
+    .rk-badge .rl {
+      font-size: 0.48rem;
+      color: var(--txt2);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .mstats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .msi {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 6px;
+      text-align: center;
+    }
+
+    .msi .v {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .msi .l {
+      font-size: 0.53rem;
+      color: var(--txt2);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* USER SELECT */
+    .usel-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .usel-wrap label {
+      font-size: 0.68rem;
+      color: var(--txt2);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .usel-wrap select {
+      flex: 1;
+      background: var(--surf2);
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .usel-wrap select:focus {
+      outline: none;
+    }
+
+    /* HISTORY */
+    .hcard {
+      background: var(--surf);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hpos {
+      font-size: 1.35rem;
+      flex-shrink: 0;
+    }
+
+    .hinfo {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .hmatch {
+      font-weight: 700;
+      font-size: 0.9rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .hdate {
+      font-size: 0.67rem;
+      color: var(--txt2);
+      margin-top: 1px;
+    }
+
+    .hpts {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--green);
+      flex-shrink: 0;
+    }
+
+    /* LOGIN */
+    .lov {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .88);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: 300;
+      backdrop-filter: blur(6px);
+    }
+
+    .lsheet {
+      background: var(--surf);
+      border: 1px solid var(--border);
+      border-radius: 20px 20px 0 0;
+      padding: 26px 22px 30px;
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .lsheet h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.75rem;
+      color: var(--gold);
+      letter-spacing: 3px;
+      margin-bottom: 4px;
+    }
+
+    .lsheet p {
+      color: var(--txt2);
+      font-size: 0.83rem;
+      margin-bottom: 18px;
+    }
+
+    .lsheet input {
+      width: 100%;
+      background: var(--surf2);
+      border: 1px solid var(--border);
+      color: var(--txt);
+      padding: 13px 14px;
+      border-radius: 10px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem;
+      margin-bottom: 12px;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .lsheet input:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+
+    .lerr {
+      color: var(--red);
+      font-size: 0.8rem;
+      margin-bottom: 10px;
+    }
+
+    .blsub {
+      width: 100%;
+      background: var(--gold);
+      color: #000;
+      border: none;
+      padding: 13px;
+      border-radius: 10px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      cursor: pointer;
+    }
+
+    .blsub:active {
+      filter: brightness(.9);
+    }
+
+    .blclose {
+      float: right;
+      background: none;
+      border: none;
+      color: var(--txt2);
+      font-size: 1.4rem;
+      cursor: pointer;
+      padding: 4px;
+      margin-bottom: -6px;
+    }
+
+    /* TOAST */
+    .tst {
+      position: fixed;
+      bottom: 78px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--surf2);
+      border: 1px solid var(--green);
+      color: var(--green);
+      padding: 11px 18px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.83rem;
+      z-index: 400;
+      white-space: nowrap;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, .5);
+      animation: sup .3s ease;
+    }
+
+    @keyframes sup {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(14px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0)
+      }
+    }
+
+    /* EMPTY */
+    .empty {
+      text-align: center;
+      padding: 44px 16px;
+      color: var(--txt2);
+    }
+
+    .empty i {
+      font-size: 2.8rem;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    /* UTIL */
+    .tg {
+      color: var(--gold) !important;
+    }
+
+    .ts {
+      color: var(--silver) !important;
+    }
+
+    .tb {
+      color: var(--bronze) !important;
+    }
+
+    .tn {
+      color: var(--green) !important;
+    }
+
+    .ta {
+      color: var(--accent) !important;
+    }
+
+    .mono {
+      font-family: 'Space Mono', monospace;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app"></div>
+
+  <script>
+    const MEMBERS = ["SARATH", "VINEETH", "VISHNU", "ANAND", "JITHIN", "NITHEESH", "GOKUL", "ADARSH", "RENJITH"];
+    const ADMIN_PW = "admin2026";
+    const SKEY = "my11circle_chegayimar_v1";
+
+    const MATCHES = [
+      { id: 1, date: "28 Mar", ts: "2026-03-28", teams: "RCB vs SRH", venue: "Chinnaswamy, Bengaluru" },
+      { id: 2, date: "29 Mar", ts: "2026-03-29", teams: "MI vs KKR", venue: "Wankhede, Mumbai" },
+      { id: 3, date: "30 Mar", ts: "2026-03-30", teams: "RR vs CSK", venue: "Barsapara, Guwahati" },
+      { id: 4, date: "31 Mar", ts: "2026-03-31", teams: "PBKS vs GT", venue: "Mullanpur, Chandigarh" },
+      { id: 5, date: "01 Apr", ts: "2026-04-01", teams: "LSG vs DC", venue: "Ekana, Lucknow" },
+      { id: 6, date: "02 Apr", ts: "2026-04-02", teams: "KKR vs SRH", venue: "Eden Gardens, Kolkata" },
+      { id: 7, date: "03 Apr", ts: "2026-04-03", teams: "CSK vs PBKS", venue: "Chepauk, Chennai" },
+      { id: 8, date: "04 Apr", ts: "2026-04-04", teams: "DC vs MI", venue: "Arun Jaitley, Delhi" },
+      { id: 9, date: "04 Apr", ts: "2026-04-04", teams: "GT vs RR", venue: "Narendra Modi, Ahmedabad" },
+      { id: 10, date: "05 Apr", ts: "2026-04-05", teams: "SRH vs LSG", venue: "Uppal, Hyderabad" },
+      { id: 11, date: "05 Apr", ts: "2026-04-05", teams: "RCB vs CSK", venue: "Chinnaswamy, Bengaluru" },
+      { id: 12, date: "06 Apr", ts: "2026-04-06", teams: "KKR vs PBKS", venue: "Eden Gardens, Kolkata" },
+      { id: 13, date: "07 Apr", ts: "2026-04-07", teams: "RR vs MI", venue: "Barsapara, Guwahati" },
+      { id: 14, date: "08 Apr", ts: "2026-04-08", teams: "DC vs GT", venue: "Arun Jaitley, Delhi" },
+      { id: 15, date: "09 Apr", ts: "2026-04-09", teams: "KKR vs LSG", venue: "Eden Gardens, Kolkata" },
+      { id: 16, date: "10 Apr", ts: "2026-04-10", teams: "SRH vs RCB", venue: "Uppal, Hyderabad" },
+      { id: 17, date: "11 Apr", ts: "2026-04-11", teams: "CSK vs MI", venue: "Chepauk, Chennai" },
+      { id: 18, date: "11 Apr", ts: "2026-04-11", teams: "PBKS vs DC", venue: "Mullanpur, Chandigarh" },
+      { id: 19, date: "12 Apr", ts: "2026-04-12", teams: "GT vs LSG", venue: "Narendra Modi, Ahmedabad" },
+      { id: 20, date: "12 Apr", ts: "2026-04-12", teams: "RR vs KKR", venue: "Sawai Mansingh, Jaipur" },
+      { id: 21, date: "13 Apr", ts: "2026-04-13", teams: "RCB vs MI", venue: "Chinnaswamy, Bengaluru" },
+      { id: 22, date: "14 Apr", ts: "2026-04-14", teams: "SRH vs CSK", venue: "Uppal, Hyderabad" },
+      { id: 23, date: "15 Apr", ts: "2026-04-15", teams: "DC vs RR", venue: "Arun Jaitley, Delhi" },
+      { id: 24, date: "16 Apr", ts: "2026-04-16", teams: "PBKS vs MI", venue: "Mullanpur, Chandigarh" },
+      { id: 25, date: "17 Apr", ts: "2026-04-17", teams: "GT vs KKR", venue: "Narendra Modi, Ahmedabad" },
+      { id: 26, date: "18 Apr", ts: "2026-04-18", teams: "LSG vs RCB", venue: "Ekana, Lucknow" },
+      { id: 27, date: "19 Apr", ts: "2026-04-19", teams: "CSK vs DC", venue: "Chepauk, Chennai" },
+      { id: 28, date: "19 Apr", ts: "2026-04-19", teams: "SRH vs GT", venue: "Uppal, Hyderabad" },
+      { id: 29, date: "20 Apr", ts: "2026-04-20", teams: "MI vs RR", venue: "Wankhede, Mumbai" },
+      { id: 30, date: "20 Apr", ts: "2026-04-20", teams: "KKR vs RCB", venue: "Eden Gardens, Kolkata" },
+      { id: 31, date: "21 Apr", ts: "2026-04-21", teams: "PBKS vs LSG", venue: "Mullanpur, Chandigarh" },
+      { id: 32, date: "22 Apr", ts: "2026-04-22", teams: "DC vs SRH", venue: "Arun Jaitley, Delhi" },
+      { id: 33, date: "23 Apr", ts: "2026-04-23", teams: "RCB vs GT", venue: "Chinnaswamy, Bengaluru" },
+      { id: 34, date: "24 Apr", ts: "2026-04-24", teams: "LSG vs MI", venue: "Ekana, Lucknow" },
+      { id: 35, date: "24 Apr", ts: "2026-04-24", teams: "RR vs PBKS", venue: "Sawai Mansingh, Jaipur" },
+      { id: 36, date: "25 Apr", ts: "2026-04-25", teams: "CSK vs KKR", venue: "Chepauk, Chennai" },
+      { id: 37, date: "26 Apr", ts: "2026-04-26", teams: "GT vs DC", venue: "Narendra Modi, Ahmedabad" },
+      { id: 38, date: "26 Apr", ts: "2026-04-26", teams: "SRH vs MI", venue: "Uppal, Hyderabad" },
+      { id: 39, date: "27 Apr", ts: "2026-04-27", teams: "RR vs RCB", venue: "Sawai Mansingh, Jaipur" },
+      { id: 40, date: "28 Apr", ts: "2026-04-28", teams: "LSG vs KKR", venue: "Ekana, Lucknow" },
+      { id: 41, date: "29 Apr", ts: "2026-04-29", teams: "MI vs CSK", venue: "Wankhede, Mumbai" },
+      { id: 42, date: "29 Apr", ts: "2026-04-29", teams: "DC vs PBKS", venue: "Arun Jaitley, Delhi" },
+      { id: 43, date: "30 Apr", ts: "2026-04-30", teams: "GT vs SRH", venue: "Narendra Modi, Ahmedabad" },
+      { id: 44, date: "01 May", ts: "2026-05-01", teams: "RCB vs RR", venue: "Raipur" },
+      { id: 45, date: "02 May", ts: "2026-05-02", teams: "KKR vs MI", venue: "Eden Gardens, Kolkata" },
+      { id: 46, date: "02 May", ts: "2026-05-02", teams: "PBKS vs CSK", venue: "HPCA, Dharamsala" },
+      { id: 47, date: "03 May", ts: "2026-05-03", teams: "SRH vs DC", venue: "Uppal, Hyderabad" },
+      { id: 48, date: "03 May", ts: "2026-05-03", teams: "LSG vs GT", venue: "Ekana, Lucknow" },
+      { id: 49, date: "04 May", ts: "2026-05-04", teams: "RR vs SRH", venue: "Barsapara, Guwahati" },
+      { id: 50, date: "05 May", ts: "2026-05-05", teams: "MI vs GT", venue: "Wankhede, Mumbai" },
+      { id: 51, date: "05 May", ts: "2026-05-05", teams: "CSK vs RCB", venue: "Chepauk, Chennai" },
+      { id: 52, date: "06 May", ts: "2026-05-06", teams: "DC vs KKR", venue: "Arun Jaitley, Delhi" },
+      { id: 53, date: "07 May", ts: "2026-05-07", teams: "PBKS vs RR", venue: "HPCA, Dharamsala" },
+      { id: 54, date: "08 May", ts: "2026-05-08", teams: "LSG vs CSK", venue: "Ekana, Lucknow" },
+      { id: 55, date: "08 May", ts: "2026-05-08", teams: "GT vs RCB", venue: "Narendra Modi, Ahmedabad" },
+      { id: 56, date: "09 May", ts: "2026-05-09", teams: "SRH vs KKR", venue: "Uppal, Hyderabad" },
+      { id: 57, date: "10 May", ts: "2026-05-10", teams: "MI vs DC", venue: "Wankhede, Mumbai" },
+      { id: 58, date: "10 May", ts: "2026-05-10", teams: "RR vs LSG", venue: "Sawai Mansingh, Jaipur" },
+      { id: 59, date: "11 May", ts: "2026-05-11", teams: "CSK vs GT", venue: "Chepauk, Chennai" },
+      { id: 60, date: "11 May", ts: "2026-05-11", teams: "RCB vs PBKS", venue: "Raipur" },
+      { id: 61, date: "12 May", ts: "2026-05-12", teams: "KKR vs DC", venue: "Eden Gardens, Kolkata" },
+      { id: 62, date: "13 May", ts: "2026-05-13", teams: "SRH vs RR", venue: "Uppal, Hyderabad" },
+      { id: 63, date: "13 May", ts: "2026-05-13", teams: "MI vs LSG", venue: "Wankhede, Mumbai" },
+      { id: 64, date: "14 May", ts: "2026-05-14", teams: "GT vs PBKS", venue: "Narendra Modi, Ahmedabad" },
+      { id: 65, date: "15 May", ts: "2026-05-15", teams: "CSK vs DC", venue: "Chepauk, Chennai" },
+      { id: 66, date: "15 May", ts: "2026-05-15", teams: "RCB vs KKR", venue: "Raipur" },
+      { id: 67, date: "16 May", ts: "2026-05-16", teams: "MI vs SRH", venue: "Wankhede, Mumbai" },
+      { id: 68, date: "17 May", ts: "2026-05-17", teams: "PBKS vs KKR", venue: "HPCA, Dharamsala" },
+      { id: 69, date: "17 May", ts: "2026-05-17", teams: "RR vs GT", venue: "Sawai Mansingh, Jaipur" },
+      { id: 70, date: "18 May", ts: "2026-05-18", teams: "DC vs LSG", venue: "Arun Jaitley, Delhi" },
+      { id: 71, date: "TBD", ts: "2026-05-26", teams: "Qualifier 1", venue: "TBD" },
+      { id: 72, date: "TBD", ts: "2026-05-27", teams: "Eliminator", venue: "TBD" },
+      { id: 73, date: "TBD", ts: "2026-05-29", teams: "Qualifier 2", venue: "TBD" },
+      { id: 74, date: "31 May", ts: "2026-05-31", teams: "FINAL 🏆", venue: "TBD" },
+    ];
+
+    // STATE
+    let S = {
+      tab: "leaderboard", isAdmin: false, showLogin: false,
+      loginPw: "", loginErr: "",
+      results: (() => { try { return JSON.parse(localStorage.getItem(SKEY)) || {}; } catch(e) { return {}; } })(),
+      editingMatch: null, fixtureFilter: "all", viewUser: MEMBERS[0],
+      toast: null, toastTmr: null
+    };
+
+    function persist() { localStorage.setItem(SKEY, JSON.stringify(S.results)); }
+
+    function stats() {
+      const played = Object.values(S.results).filter(r => r.first).length;
+      return MEMBERS.map(name => {
+        let w = 0, s2 = 0, s3 = 0;
+        Object.values(S.results).forEach(r => {
+          if (r.first === name) w++; if (r.second === name) s2++; if (r.third === name) s3++;
+        });
+        const pts = w * 5 + s2 * 3 + s3;
+        const wr = played > 0 ? parseFloat(((w / played) * 100).toFixed(1)) : 0;
+        return { name, wins: w, second: s2, third: s3, pts, wr, played };
+      }).sort((a, b) => b.pts !== a.pts ? b.pts - a.pts : b.wr - a.wr);
+    }
+
+    function mstatus(m) {
+      if (S.results[m.id]?.first) return "done";
+      const t = new Date(); t.setHours(0, 0, 0, 0);
+      const d = new Date(m.ts); d.setHours(0, 0, 0, 0);
+      return d.getTime() === t.getTime() ? "today" : "upcoming";
+    }
+
+    function toast(msg, err = false) {
+      if (S.toastTmr) clearTimeout(S.toastTmr);
+      S.toast = { msg, err }; render();
+      S.toastTmr = setTimeout(() => { S.toast = null; render(); }, 2800);
+    }
+
+    // RENDER
+    function render() {
+      document.getElementById("app").innerHTML = page();
+    }
+
+    function page() {
+      const st = stats();
+      const leader = st[0];
+      const played = Object.values(S.results).filter(r => r.first).length;
+      return `
+  ${S.showLogin ? loginHTML() : ""}
+  ${S.toast ? `<div class="tst" style="${S.toast.err ? "border-color:var(--red);color:var(--red)" : ""}">${S.toast.msg}</div>` : ""}
+  <header class="app-header">
+    <div class="d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center gap-2">
+        <span class="h-icon">🏏</span>
+        <div>
+          <div class="h-title">MY11CIRCLE</div>
+          <div class="h-sub">CHEGAYIMAR BATTLE · IPL 2026</div>
+        </div>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        ${S.isAdmin
+          ? `<span class="admin-pill"><i class="bi bi-lightning-fill"></i> ADMIN</span>
+            <button class="btn-lo" onclick="logoutAdmin()"><i class="bi bi-box-arrow-right"></i></button>`
+          : `<button class="btn-al" onclick="openLogin()"><i class="bi bi-lock-fill"></i> Admin</button>`}
+      </div>
+    </div>
+  </header>
+  <div class="main">
+    ${S.tab === "leaderboard" ? lbHTML(st, leader, played) : ""}
+    ${S.tab === "fixtures" ? fixHTML() : ""}
+    ${S.tab === "mystats" ? myHTML(st) : ""}
+  </div>
+  <nav class="bnav">
+    <button class="bn-btn ${S.tab === 'leaderboard' ? 'active' : ''}" onclick="setTab('leaderboard')">
+      <i class="bi bi-trophy-fill"></i>Board
+    </button>
+    <button class="bn-btn ${S.tab === 'fixtures' ? 'active' : ''}" onclick="setTab('fixtures')">
+      <i class="bi bi-calendar3"></i>Matches
+    </button>
+    <button class="bn-btn ${S.tab === 'mystats' ? 'active' : ''}" onclick="setTab('mystats')">
+      <i class="bi bi-person-fill"></i>My Stats
+    </button>
+  </nav>`;
+    }
+
+    // LEADERBOARD
+    function lbHTML(st, leader, played) {
+      const rc = i => i === 0 ? "c1" : i === 1 ? "c2" : i === 2 ? "c3" : "cn";
+      const ri = i => i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : "";
+      return `
+  <div class="stats-grid">
+    <div class="scard"><div class="big">${played}</div><div class="lbl">Played</div></div>
+    <div class="scard"><div class="big tg">${74 - played}</div><div class="lbl">Remaining</div></div>
+    <div class="scard"><div class="big tn">${leader?.pts || 0}</div><div class="lbl">Top Points</div></div>
+    <div class="scard"><div class="big ta">${leader?.wr || 0}%</div><div class="lbl">Leader WR</div></div>
+  </div>
+  ${leader && leader.pts > 0 ? `
+  <div class="wbanner">
+    <div class="wtrophy">🏆</div>
+    <div>
+      <div class="wlbl">Current Leader</div>
+      <div class="wname">${leader.name}</div>
+      <div class="wstats"><span>${leader.pts} pts</span> · WR <span>${leader.wr}%</span> · <span>${leader.wins}</span>🥇 <span>${leader.second}</span>🥈 <span>${leader.third}</span>🥉</div>
+    </div>
+  </div>`: ""}
+  <div class="stitle"><i class="bi bi-trophy-fill me-1"></i>LEADERBOARD</div>
+  <div class="lb-list">
+  ${st.map((s, i) => `
+    <div class="lb-card ${i < 3 ? 'r' + (i + 1) : ''}">
+      <div class="lb-rn ${rc(i)}">${ri(i) || i + 1}</div>
+      <div class="lb-nw">
+        <div class="lb-pn ${rc(i)}">${s.name}</div>
+        <div class="lb-bgs">
+          <span class="lbg w">🥇 ${s.wins}W</span>
+          <span class="lbg s">🥈 ${s.second}</span>
+          <span class="lbg t">🥉 ${s.third}</span>
+        </div>
+      </div>
+      <div class="lb-pr">
+        <div class="lb-pts">${s.pts}</div>
+        <div class="lb-pl">pts</div>
+        <div class="lb-wr">${s.wr}%</div>
+      </div>
+    </div>`).join("")}
+  </div>
+  <p class="text-center mt-3" style="font-size:.6rem;color:var(--txt2)">⚡ Win Rate used as tiebreaker when points are equal</p>`;
+    }
+
+    // FIXTURES
+    function fixHTML() {
+      const f = S.fixtureFilter;
+      let list = MATCHES;
+      if (f === "done") list = list.filter(m => S.results[m.id]?.first);
+      if (f === "upcoming") list = list.filter(m => !S.results[m.id]?.first);
+      if (f === "today") {
+        const t = new Date(); t.setHours(0, 0, 0, 0);
+        list = list.filter(m => { const d = new Date(m.ts); d.setHours(0, 0, 0, 0); return d.getTime() === t.getTime(); });
+      }
+      return `
+  <div class="stitle"><i class="bi bi-calendar3 me-1"></i>IPL 2026 FIXTURES</div>
+  <div class="fpills">
+    ${["all", "today", "upcoming", "done"].map(v => `
+      <button class="fpill ${f === v ? "active" : ""}" onclick="setFilter('${v}')">${v.toUpperCase()}</button>
+    `).join("")}
+  </div>
+  ${list.length === 0 ? `<div class="empty"><i class="bi bi-calendar-x"></i>No matches in this filter</div>` : ""}
+  ${list.map(m => fcard(m)).join("")}`;
+    }
+
+    function fcard(m) {
+      const r = S.results[m.id] || {};
+      const st = mstatus(m);
+      const isEd = S.editingMatch === m.id;
+      const isSaved = !!r.first;
+
+      const badge = st === "done"
+        ? `<span class="b-dn"><i class="bi bi-check-circle-fill"></i> Saved</span>`
+        : st === "today"
+          ? `<span class="b-td"><i class="bi bi-circle-fill"></i> TODAY</span>`
+          : `<span class="b-up">Upcoming</span>`;
+
+      const top = `
+  <div class="ftop"><span class="fnum">M${m.id}</span>${isEd ? `<span class="b-ed"><i class="bi bi-pencil-fill"></i> Editing</span>` : badge}</div>
+  <div class="fteams">${m.teams}</div>
+  <div class="fvenue"><i class="bi bi-geo-alt-fill" style="font-size:.62rem"></i> ${m.venue}</div>
+  <div class="fdate"><i class="bi bi-calendar-event" style="font-size:.62rem"></i> ${m.date}</div>`;
+
+      const opts = MEMBERS.map(n => `<option value="${n}">${n}</option>`).join("");
+
+      // Admin: saved + not editing → summary + edit btn
+      if (isSaved && !isEd && S.isAdmin) {
+        return `<div class="fcard fdone">
+      ${top}
+      <div class="fresult">
+        <span class="fri tg">🥇 ${r.first}</span>
+        <span style="color:var(--txt2)">·</span>
+        <span class="fri ts">🥈 ${r.second || "—"}</span>
+        <span style="color:var(--txt2)">·</span>
+        <span class="fri tb">🥉 ${r.third || "—"}</span>
+      </div>
+      <div class="abnts mt-2">
+        <button class="bedit" onclick="startEdit(${m.id})"><i class="bi bi-pencil-fill"></i> Edit Result</button>
+      </div>
+    </div>`;
+      }
+
+      // User: saved → read only
+      if (isSaved && !S.isAdmin) {
+        return `<div class="fcard fdone">
+      ${top}
+      <div class="fresult">
+        <span class="fri tg">🥇 ${r.first}</span>
+        <span style="color:var(--txt2)">·</span>
+        <span class="fri ts">🥈 ${r.second || "—"}</span>
+        <span style="color:var(--txt2)">·</span>
+        <span class="fri tb">🥉 ${r.third || "—"}</span>
+      </div>
+    </div>`;
+      }
+
+      // Admin: unsaved or editing → dropdowns
+      if (S.isAdmin) {
+        const selOpts = (field, saved) => `
+      <option value="">${field === 'first' ? '🥇 1st Place (5 pts)' : field === 'second' ? '🥈 2nd Place (3 pts)' : '🥉 3rd Place (1 pt)'}</option>
+      ${MEMBERS.map(n => `<option value="${n}" ${saved === n ? "selected" : ""}>${n}</option>`).join("")}`;
+        return `<div class="fcard ${isEd ? "fediting" : st === "today" ? "ftoday" : ""}">
+      ${top}
+      <div class="aselects">
+        <div class="arow"><label>🥇</label>
+          <select id="sel-${m.id}-first" class="${r.first ? "hv" : ""}">${selOpts('first', r.first)}</select>
+        </div>
+        <div class="arow"><label>🥈</label>
+          <select id="sel-${m.id}-second" class="${r.second ? "hv" : ""}">${selOpts('second', r.second)}</select>
+        </div>
+        <div class="arow"><label>🥉</label>
+          <select id="sel-${m.id}-third" class="${r.third ? "hv" : ""}">${selOpts('third', r.third)}</select>
+        </div>
+      </div>
+      <div class="abnts">
+        <button class="bsave" onclick="saveMatch(${m.id})"><i class="bi bi-floppy-fill"></i> SAVE</button>
+        ${isEd ? `<button class="bcancel" onclick="cancelEdit()"><i class="bi bi-x-lg"></i></button>` : ""}
+      </div>
+    </div>`;
+      }
+
+      // User: not saved
+      return `<div class="fcard ${st === "today" ? "ftoday" : ""}">
+    ${top}
+    <div class="fresult"><span style="color:var(--txt2);font-size:.78rem">Result pending...</span></div>
+  </div>`;
+    }
+
+    // MY STATS
+    function myHTML(st) {
+      const name = S.viewUser;
+      const s = st.find(x => x.name === name) || { pts: 0, wins: 0, second: 0, third: 0, wr: 0 };
+      const ri = st.findIndex(x => x.name === name) + 1;
+      const rc = ri === 1 ? "var(--gold)" : ri === 2 ? "var(--silver)" : ri === 3 ? "var(--bronze)" : "var(--txt2)";
+      const re = ri === 1 ? "🥇" : ri === 2 ? "🥈" : ri === 3 ? "🥉" : "#" + ri;
+      const my = MATCHES.filter(m => { const r = S.results[m.id] || {}; return r.first === name || r.second === name || r.third === name; });
+      return `
+  <div class="stitle"><i class="bi bi-person-fill me-1"></i>MY STATS</div>
+  <div class="usel-wrap">
+    <label>PLAYER:</label>
+    <select onchange="setViewUser(this.value)">
+      ${MEMBERS.map(n => `<option value="${n}" ${n === name ? "selected" : ""}>${n}</option>`).join("")}
+    </select>
+  </div>
+  <div class="procard">
+    <div class="d-flex align-items-center gap-3 mb-3">
+      <div class="av">${name[0]}</div>
+      <div class="flex-fill">
+        <div class="pname">${name}</div>
+        <div style="font-size:.6rem;color:var(--txt2);letter-spacing:2px">IPL 2026 · CHEGAYIMAR BATTLE</div>
+      </div>
+      <div class="rk-badge" style="border-color:${rc}">
+        <div class="rn" style="color:${rc}">${re}</div>
+        <div class="rl">RANK</div>
+      </div>
+    </div>
+    <div class="mstats">
+      <div class="msi"><div class="v tn">${s.pts}</div><div class="l">Total Pts</div></div>
+      <div class="msi"><div class="v tg">${s.wins}</div><div class="l">🥇 1st</div></div>
+      <div class="msi"><div class="v ts">${s.second}</div><div class="l">🥈 2nd</div></div>
+      <div class="msi"><div class="v tb">${s.third}</div><div class="l">🥉 3rd</div></div>
+      <div class="msi"><div class="v ta">${s.wr}%</div><div class="l">Win Rate</div></div>
+      <div class="msi"><div class="v" style="color:var(--txt2)">${my.length}</div><div class="l">Podiums</div></div>
+    </div>
+  </div>
+  <div class="stitle"><i class="bi bi-clock-history me-1"></i>MATCH HISTORY</div>
+  ${my.length === 0
+          ? `<div class="empty"><i class="bi bi-emoji-frown"></i><div>No points yet for ${name}</div></div>`
+          : my.map(m => {
+            const r = S.results[m.id] || {};
+            const pos = r.first === name ? "🥇" : r.second === name ? "🥈" : "🥉";
+            const pts = r.first === name ? 5 : r.second === name ? 3 : 1;
+            const pl = r.first === name ? "1st · 5 pts" : r.second === name ? "2nd · 3 pts" : "3rd · 1 pt";
+            const pc = r.first === name ? "var(--gold2)" : r.second === name ? "var(--silver)" : "var(--bronze)";
+            return `<div class="hcard">
+        <div class="hpos">${pos}</div>
+        <div class="hinfo">
+          <div class="hmatch">${m.teams}</div>
+          <div class="hdate" style="color:${pc}">${pl} · ${m.date}</div>
+        </div>
+        <div class="hpts">+${pts}</div>
+      </div>`;
+          }).join("")
+        }`;
+    }
+
+    // LOGIN
+    function loginHTML() {
+      return `<div class="lov" onclick="ovrClick(event)">
+    <div class="lsheet">
+      <button class="blclose" onclick="closeLogin()"><i class="bi bi-x-lg"></i></button>
+      <h2>🔐 ADMIN LOGIN</h2>
+      <p>Enter admin password to manage match results</p>
+      ${S.loginErr ? `<div class="lerr"><i class="bi bi-exclamation-triangle-fill"></i> ${S.loginErr}</div>` : ""}
+      <input type="password" placeholder="Password" value="${S.loginPw}"
+        oninput="S.loginPw=this.value" onkeydown="if(event.key==='Enter')tryLogin()"/>
+      <button class="blsub" onclick="tryLogin()">ENTER ADMIN MODE</button>
+    </div>
+  </div>`;
+    }
+
+    // ACTIONS
+    function setTab(t) { S.tab = t; render(); window.scrollTo(0, 0); }
+    function setFilter(f) { S.fixtureFilter = f; render(); }
+    function setViewUser(v) { S.viewUser = v; render(); }
+    function openLogin() { S.showLogin = true; S.loginErr = ""; render(); }
+    function closeLogin() { S.showLogin = false; S.loginPw = ""; render(); }
+    function ovrClick(e) { if (e.target.classList.contains("lov")) closeLogin(); }
+    function tryLogin() {
+      if (S.loginPw === ADMIN_PW) { S.isAdmin = true; S.showLogin = false; S.loginPw = ""; toast("✅ Admin mode activated!"); }
+      else { S.loginErr = "Wrong password. Try again."; render(); }
+    }
+    function logoutAdmin() { S.isAdmin = false; S.editingMatch = null; toast("Logged out"); render(); }
+    function startEdit(id) { S.editingMatch = id; render(); }
+    function cancelEdit() { S.editingMatch = null; render(); }
+    function saveMatch(id) {
+      const f = document.getElementById(`sel-${id}-first`)?.value || "";
+      const s = document.getElementById(`sel-${id}-second`)?.value || "";
+      const t = document.getElementById(`sel-${id}-third`)?.value || "";
+      if (!f) { toast("⚠️ Select 1st place winner!", true); return; }
+      S.results[id] = { first: f, second: s, third: t };
+      S.editingMatch = null; persist(); toast(`✅ Match ${id} saved!`);
+    }
+
+    Object.assign(window, {
+      setTab, setFilter, setViewUser, openLogin, closeLogin, ovrClick,
+      tryLogin, logoutAdmin, startEdit, cancelEdit, saveMatch, S
+    });
+
+    render();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
