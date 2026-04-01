@@ -1146,7 +1146,7 @@
       tab: "leaderboard", isAdmin: false, showLogin: false,
       loginPw: "", loginErr: "",
       results: {}, // Now populated from Firebase
-      editingMatch: null, fixtureFilter: "all", viewUser: MEMBERS[0],
+      editingMatch: null, fixtureFilter: "all", viewUser: "",
       toast: null, toastTmr: null
     };
 
@@ -1411,19 +1411,32 @@
     // MY STATS
     function myHTML(st) {
       const name = S.viewUser;
+      
+      let html = `
+  <div class="stitle"><i class="bi bi-person-fill me-1"></i>MY STATS</div>
+  <div class="usel-wrap">
+    <label>PLAYER:</label>
+    <select onchange="setViewUser(this.value)">
+      <option value="" disabled ${!name ? "selected" : ""}>Select your name...</option>
+      ${MEMBERS.map(n => `<option value="${n}" ${n === name ? "selected" : ""}>${n}</option>`).join("")}
+    </select>
+  </div>`;
+
+      if (!name) {
+        return html + `
+  <div class="empty" style="margin-top:40px;">
+    <i class="bi bi-person-bounding-box" style="font-size:3.5rem; color:var(--txt2); margin-bottom:15px; display:block; opacity:0.5;"></i>
+    <div style="font-size: 0.9rem; color: var(--txt2); line-height: 1.5;">Please select your name from the dropdown<br>above to view your detailed statistics and match history.</div>
+  </div>`;
+      }
+
       const s = st.find(x => x.name === name) || { pts: 0, wins: 0, second: 0, third: 0, wr: 0 };
       const ri = st.findIndex(x => x.name === name) + 1;
       const rc = ri === 1 ? "var(--gold)" : ri === 2 ? "var(--silver)" : ri === 3 ? "var(--bronze)" : "var(--txt2)";
       const re = ri === 1 ? "🥇" : ri === 2 ? "🥈" : ri === 3 ? "🥉" : "#" + ri;
       const my = MATCHES.filter(m => { const r = S.results[m.id] || {}; return r.first === name || r.second === name || r.third === name; });
-      return `
-  <div class="stitle"><i class="bi bi-person-fill me-1"></i>MY STATS</div>
-  <div class="usel-wrap">
-    <label>PLAYER:</label>
-    <select onchange="setViewUser(this.value)">
-      ${MEMBERS.map(n => `<option value="${n}" ${n === name ? "selected" : ""}>${n}</option>`).join("")}
-    </select>
-  </div>
+      
+      return html + `
   <div class="procard">
     <div class="d-flex align-items-center gap-3 mb-3">
       <div class="av">${name[0]}</div>
@@ -1482,7 +1495,10 @@
     }
 
     // ACTIONS
-    function setTab(t) { S.tab = t; render(); window.scrollTo(0, 0); }
+    function setTab(t) { 
+      if (t !== "mystats") S.viewUser = "";
+      S.tab = t; render(); window.scrollTo(0, 0); 
+    }
     function setFilter(f) { S.fixtureFilter = f; render(); }
     function setViewUser(v) { S.viewUser = v; render(); }
     function openLogin() { S.showLogin = true; S.loginErr = ""; render(); }
