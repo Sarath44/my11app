@@ -237,59 +237,105 @@
 
     /* WINNER BANNER */
     .wbanner {
-      background: linear-gradient(135deg, #1c0f00, #2e1900);
-      border: 2px solid var(--gold);
-      border-radius: 14px;
-      padding: 14px 16px;
-      margin-bottom: 14px;
-      box-shadow: 0 0 32px rgba(245, 166, 35, .2);
+      position: relative;
+      background: linear-gradient(135deg, #2a1600, #140a00);
+      border: 1px solid rgba(245, 166, 35, 0.4);
+      border-radius: 16px;
+      padding: 18px 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 32px rgba(245, 166, 35, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 16px;
+      overflow: hidden;
+    }
+
+    .wbanner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(245, 166, 35, 0.1) 0%, transparent 60%);
+      pointer-events: none;
     }
 
     .wtrophy {
-      font-size: 2.4rem;
-      animation: glow 2s infinite;
+      font-size: 3.2rem;
+      animation: w-glow 3s ease-in-out infinite alternate;
+      z-index: 1;
     }
 
-    @keyframes glow {
-
-      0%,
+    @keyframes w-glow {
+      0% {
+        filter: drop-shadow(0 0 10px rgba(245, 166, 35, 0.6)) scale(1);
+      }
       100% {
-        filter: drop-shadow(0 0 8px var(--gold))
+        filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.9)) scale(1.05);
       }
+    }
 
-      50% {
-        filter: drop-shadow(0 0 20px var(--gold2))
-      }
+    .winfo {
+      flex: 1;
+      z-index: 1;
+    }
+
+    .wlbl {
+      display: inline-block;
+      background: rgba(245, 166, 35, 0.15);
+      color: var(--gold);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      border: 1px solid rgba(245, 166, 35, 0.3);
     }
 
     .wname {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.9rem;
-      color: var(--gold);
+      font-size: 2.2rem;
+      color: #fff;
       letter-spacing: 2px;
       line-height: 1;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      margin-bottom: 10px;
     }
 
-    .wlbl {
-      font-size: 0.58rem;
-      color: var(--txt2);
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      margin-bottom: 2px;
+    .wname span {
+      color: var(--gold);
     }
 
     .wstats {
-      font-size: 0.76rem;
-      color: var(--txt2);
-      margin-top: 4px;
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
     }
 
-    .wstats span {
+    .wstat-pill {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-family: 'Space Mono', monospace;
+      color: var(--txt);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .wstat-pill i {
+      font-style: normal;
+    }
+
+    .wstat-pill .val {
       color: var(--gold2);
       font-weight: 700;
+      font-size: 0.8rem;
     }
 
     /* LEADERBOARD */
@@ -1253,10 +1299,14 @@
   ${leader && leader.pts > 0 ? `
   <div class="wbanner">
     <div class="wtrophy">🏆</div>
-    <div>
-      <div class="wlbl">Current Leader</div>
-      <div class="wname">${leader.name}</div>
-      <div class="wstats"><span>${leader.pts} pts</span> · WR <span>${leader.wr}%</span> · <span>${leader.wins}</span>🥇 <span>${leader.second}</span>🥈 <span>${leader.third}</span>🥉</div>
+    <div class="winfo">
+      <div class="wlbl"><i class="bi bi-star-fill" style="margin-right:4px;"></i>CURRENT LEADER</div>
+      <div class="wname"><span>#1</span> ${leader.name}</div>
+      <div class="wstats">
+        <div class="wstat-pill"><i>⭐</i> <span class="val">${leader.pts}</span> pts</div>
+        <div class="wstat-pill"><i>🎯</i> <span class="val">${leader.wr}%</span> WR</div>
+        <div class="wstat-pill"><i>🥇</i> <span class="val">${leader.wins}</span></div>
+      </div>
     </div>
   </div>`: ""}
   <div class="stitle"><i class="bi bi-trophy-fill me-1"></i>LEADERBOARD</div>
