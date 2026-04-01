@@ -1171,7 +1171,12 @@
         const pts = w * 5 + s2 * 3 + s3;
         const wr = played > 0 ? parseFloat(((w / played) * 100).toFixed(1)) : 0;
         return { name, wins: w, second: s2, third: s3, pts, wr, played };
-      }).sort((a, b) => b.pts !== a.pts ? b.pts - a.pts : b.wr - a.wr);
+      }).sort((a, b) => {
+        if (b.pts !== a.pts) return b.pts - a.pts;
+        if (b.wins !== a.wins) return b.wins - a.wins;
+        if (b.second !== a.second) return b.second - a.second;
+        return b.third - a.third;
+      });
     }
 
     function mstatus(m) {
@@ -1284,10 +1289,16 @@
         <li style="margin-bottom:4px"><span style="color:var(--silver)">🥈 2nd Place:</span> +3 Points</li>
         <li style="margin-bottom:4px"><span style="color:var(--bronze)">🥉 3rd Place:</span> +1 Point</li>
       </ul>
-      <p style="margin-bottom:8px; font-family:'Bebas Neue', sans-serif; font-size:1.1rem; color:var(--accent); letter-spacing:1px;">⚡ WIN RATE CALCULATION</p>
+      <p style="margin-bottom:8px; font-family:'Bebas Neue', sans-serif; font-size:1.1rem; color:var(--accent); letter-spacing:1px;">⚡ TIEBREAKER & WIN RATE</p>
       <ul style="padding-left: 20px; margin-bottom: 0; color:var(--txt2); font-weight:600; font-size:0.8rem;">
-        <li style="margin-bottom:4px">Calculated as: <br><span class="mono" style="color:var(--txt); font-size:0.75rem; background:rgba(0,0,0,0.3); padding:2px 6px; border-radius:4px;">(Total 1st Place Finishes / Total Matches Played) * 100</span></li>
-        <li style="margin-bottom:4px">Win Rate is used as the primary tiebreaker when total points are equal.</li>
+        <li style="margin-bottom:4px">Win Rate = <span class="mono" style="color:var(--txt); font-size:0.75rem; background:rgba(0,0,0,0.3); padding:2px 6px; border-radius:4px;">(1st Places / Matches Played) * 100</span></li>
+        <li style="margin-bottom:4px">If total points are equal, ties are broken by:
+          <ul style="padding-left: 15px; margin-top: 4px; margin-bottom:0;">
+            <li style="margin-bottom:2px">1. <span style="color:var(--gold)">Most 1st Place (🥇)</span> finishes</li>
+            <li style="margin-bottom:2px">2. <span style="color:var(--silver)">Most 2nd Place (🥈)</span> finishes</li>
+            <li style="margin-bottom:2px">3. <span style="color:var(--bronze)">Most 3rd Place (🥉)</span> finishes</li>
+          </ul>
+        </li>
       </ul>
     </div>
   </div>`;
