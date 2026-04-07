@@ -1208,7 +1208,7 @@
     }
 
     function stats() {
-      const played = Object.values(S.results).filter(r => r.first).length;
+      const played = Object.values(S.results).filter(r => r.first && r.first !== "NO_RESULT").length;
       return MEMBERS.map(name => {
         let w = 0, s2 = 0, s3 = 0;
         Object.values(S.results).forEach(r => {
@@ -1406,11 +1406,12 @@
         return `<div class="fcard fdone">
       ${top}
       <div class="fresult">
-        <span class="fri tg">🥇 ${r.first}</span>
+        ${r.first === "NO_RESULT" ? `<span class="fri" style="color:var(--txt2)"><i class="bi bi-cloud-rain-heavy-fill"></i> No Result Due To Rain</span>` :
+        `<span class="fri tg">🥇 ${r.first}</span>
         <span style="color:var(--txt2)">·</span>
         <span class="fri ts">🥈 ${r.second || "—"}</span>
         <span style="color:var(--txt2)">·</span>
-        <span class="fri tb">🥉 ${r.third || "—"}</span>
+        <span class="fri tb">🥉 ${r.third || "—"}</span>`}
       </div>
       <div class="abnts mt-2">
         <button class="bedit" onclick="startEdit(${m.id})"><i class="bi bi-pencil-fill"></i> Edit Result</button>
@@ -1423,11 +1424,12 @@
         return `<div class="fcard fdone">
       ${top}
       <div class="fresult">
-        <span class="fri tg">🥇 ${r.first}</span>
+        ${r.first === "NO_RESULT" ? `<span class="fri" style="color:var(--txt2)"><i class="bi bi-cloud-rain-heavy-fill"></i> No Result Due To Rain</span>` :
+        `<span class="fri tg">🥇 ${r.first}</span>
         <span style="color:var(--txt2)">·</span>
         <span class="fri ts">🥈 ${r.second || "—"}</span>
         <span style="color:var(--txt2)">·</span>
-        <span class="fri tb">🥉 ${r.third || "—"}</span>
+        <span class="fri tb">🥉 ${r.third || "—"}</span>`}
       </div>
     </div>`;
       }
@@ -1436,6 +1438,7 @@
       if (S.isAdmin) {
         const selOpts = (field, saved) => `
       <option value="">${field === 'first' ? '🥇 1st Place (5 pts)' : field === 'second' ? '🥈 2nd Place (3 pts)' : '🥉 3rd Place (1 pt)'}</option>
+      ${field === 'first' ? `<option value="NO_RESULT" ${saved === "NO_RESULT" ? "selected" : ""}>🌧️ No Result Due To Rain</option>` : ''}
       ${MEMBERS.map(n => `<option value="${n}" ${saved === n ? "selected" : ""}>${n}</option>`).join("")}`;
         return `<div class="fcard ${isEd ? "fediting" : st === "today" ? "ftoday" : ""}">
       ${top}
@@ -1452,6 +1455,7 @@
       </div>
       <div class="abnts">
         <button class="bsave" onclick="saveMatch(${m.id})"><i class="bi bi-floppy-fill"></i> SAVE</button>
+        ${isEd && isSaved ? `<button class="bcancel" onclick="clearMatch(${m.id})"><i class="bi bi-trash-fill"></i> CLEAR</button>` : ""}
         ${isEd ? `<button class="bcancel" onclick="cancelEdit()"><i class="bi bi-x-lg"></i></button>` : ""}
       </div>
     </div>`;
@@ -1567,18 +1571,27 @@
     function logoutAdmin() { S.isAdmin = false; S.editingMatch = null; toast("Logged out"); render(); }
     function startEdit(id) { S.editingMatch = id; render(); }
     function cancelEdit() { S.editingMatch = null; render(); }
+    function clearMatch(id) {
+      if (confirm("Are you sure you want to clear this saved result?")) {
+        delete S.results[id];
+        S.editingMatch = null;
+        persist();
+        toast(`🗑️ Match ${id} cleared`);
+      }
+    }
     function saveMatch(id) {
       const f = document.getElementById(`sel-${id}-first`)?.value || "";
-      const s = document.getElementById(`sel-${id}-second`)?.value || "";
-      const t = document.getElementById(`sel-${id}-third`)?.value || "";
-      if (!f) { toast("⚠️ Select 1st place winner!", true); return; }
+      let s = document.getElementById(`sel-${id}-second`)?.value || "";
+      let t = document.getElementById(`sel-${id}-third`)?.value || "";
+      if (!f) { toast("⚠️ Select 1st place winner or clear result!", true); return; }
+      if (f === "NO_RESULT") { s = ""; t = ""; }
       S.results[id] = { first: f, second: s, third: t };
       S.editingMatch = null; persist(); toast(`✅ Match ${id} saved!`);
     }
 
     Object.assign(window, {
       setTab, setFilter, setViewUser, openLogin, closeLogin, ovrClick,
-      tryLogin, logoutAdmin, startEdit, cancelEdit, saveMatch, S
+      tryLogin, logoutAdmin, startEdit, cancelEdit, clearMatch, saveMatch, S
     });
 
     render();
