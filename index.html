@@ -1080,6 +1080,35 @@
     .mono {
       font-family: 'Space Mono', monospace;
     }
+
+    /* TOGGLE SWITCH */
+    .tswitch {
+      position: relative;
+      display: inline-block;
+      width: 38px;
+      height: 20px;
+    }
+    .tswitch input { opacity: 0; width: 0; height: 0; margin:0; }
+    .tswitch .slider {
+      position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+      background-color: var(--surf2);
+      border: 1px solid var(--border);
+      transition: .3s; border-radius: 20px;
+    }
+    .tswitch .slider:before {
+      position: absolute; content: "";
+      height: 14px; width: 14px; left: 2px; bottom: 2px;
+      background-color: var(--txt2);
+      transition: .3s; border-radius: 50%;
+    }
+    .tswitch input:checked + .slider {
+      background-color: rgba(255, 82, 82, 0.2);
+      border-color: var(--red);
+    }
+    .tswitch input:checked + .slider:before {
+      transform: translateX(18px);
+      background-color: var(--red);
+    }
   </style>
 </head>
 
@@ -1406,7 +1435,7 @@
         return `<div class="fcard fdone">
       ${top}
       <div class="fresult">
-        ${r.first === "NO_RESULT" ? `<span class="fri" style="color:var(--txt2)"><i class="bi bi-cloud-rain-heavy-fill"></i> No Result Due To Rain</span>` :
+        ${r.first === "NO_RESULT" ? `<span class="fri" style="color:var(--red)"><i class="bi bi-x-octagon-fill"></i> MATCH ABANDONED (RAIN)</span>` :
         `<span class="fri tg">🥇 ${r.first}</span>
         <span style="color:var(--txt2)">·</span>
         <span class="fri ts">🥈 ${r.second || "—"}</span>
@@ -1424,7 +1453,7 @@
         return `<div class="fcard fdone">
       ${top}
       <div class="fresult">
-        ${r.first === "NO_RESULT" ? `<span class="fri" style="color:var(--txt2)"><i class="bi bi-cloud-rain-heavy-fill"></i> No Result Due To Rain</span>` :
+        ${r.first === "NO_RESULT" ? `<span class="fri" style="color:var(--red)"><i class="bi bi-x-octagon-fill"></i> MATCH ABANDONED (RAIN)</span>` :
         `<span class="fri tg">🥇 ${r.first}</span>
         <span style="color:var(--txt2)">·</span>
         <span class="fri ts">🥈 ${r.second || "—"}</span>
@@ -1438,11 +1467,10 @@
       if (S.isAdmin) {
         const selOpts = (field, saved) => `
       <option value="">${field === 'first' ? '🥇 1st Place (5 pts)' : field === 'second' ? '🥈 2nd Place (3 pts)' : '🥉 3rd Place (1 pt)'}</option>
-      ${field === 'first' ? `<option value="NO_RESULT" ${saved === "NO_RESULT" ? "selected" : ""}>🌧️ No Result Due To Rain</option>` : ''}
       ${MEMBERS.map(n => `<option value="${n}" ${saved === n ? "selected" : ""}>${n}</option>`).join("")}`;
         return `<div class="fcard ${isEd ? "fediting" : st === "today" ? "ftoday" : ""}">
       ${top}
-      <div class="aselects">
+      <div class="aselects" style="${r.first === 'NO_RESULT' ? 'opacity:0.4; pointer-events:none;' : ''}">
         <div class="arow"><label>🥇</label>
           <select id="sel-${m.id}-first" class="${r.first ? "hv" : ""}">${selOpts('first', r.first)}</select>
         </div>
@@ -1453,7 +1481,16 @@
           <select id="sel-${m.id}-third" class="${r.third ? "hv" : ""}">${selOpts('third', r.third)}</select>
         </div>
       </div>
-      <div class="abnts">
+      <div class="abnts" style="justify-content:space-between; align-items:center; padding:8px 4px 2px;">
+        <label style="display:flex; align-items:center; gap:8px; cursor:pointer;" class="tswitch-wrapper">
+          <div class="tswitch">
+             <input type="checkbox" onchange="toggleAbandon(${m.id}, this.checked)" ${r.first === "NO_RESULT" ? "checked" : ""}>
+             <span class="slider"></span>
+          </div>
+          <span style="font-size:0.75rem; color:var(--red); font-weight:700;">ABANDON MATCH</span>
+        </label>
+      </div>
+      <div class="abnts mt-2">
         <button class="bsave" onclick="saveMatch(${m.id})"><i class="bi bi-floppy-fill"></i> SAVE</button>
         ${isEd && isSaved ? `<button class="bcancel" onclick="clearMatch(${m.id})"><i class="bi bi-trash-fill"></i> CLEAR</button>` : ""}
         ${isEd ? `<button class="bcancel" onclick="cancelEdit()"><i class="bi bi-x-lg"></i></button>` : ""}
@@ -1588,10 +1625,27 @@
       S.results[id] = { first: f, second: s, third: t };
       S.editingMatch = null; persist(); toast(`✅ Match ${id} saved!`);
     }
+    function toggleAbandon(id, checked) {
+      if (checked) {
+        if (confirm("Automatically abandon this match due to rain?")) {
+           S.results[id] = { first: "NO_RESULT", second: "", third: "" };
+           S.editingMatch = null;
+           persist();
+           toast(`🌧️ Match ${id} abandoned`);
+        } else { render(); }
+      } else {
+        if (confirm("Remove abandoned status and clear match?")) {
+           delete S.results[id];
+           S.editingMatch = null;
+           persist();
+           toast(`🗑️ Match ${id} cleared`);
+        } else { render(); }
+      }
+    }
 
     Object.assign(window, {
       setTab, setFilter, setViewUser, openLogin, closeLogin, ovrClick,
-      tryLogin, logoutAdmin, startEdit, cancelEdit, clearMatch, saveMatch, S
+      tryLogin, logoutAdmin, startEdit, cancelEdit, clearMatch, saveMatch, toggleAbandon, S
     });
 
     render();
